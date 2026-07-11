@@ -1,5 +1,5 @@
 <h1 align="center">
-<a href="https://tharunkumar.xyz/" target="_blank"> 
+<a href="https://tharuntk.com/" target="_blank"> 
   tharunkumar.xyz
   </a>
 </h1>
