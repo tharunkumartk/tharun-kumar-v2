@@ -1,7 +1,7 @@
 ---
 timestamp: "2023-08-05T00:00:00Z"
 title: 'An app to meet chillers'
-imageUrl: '/images/project/chillers/chillers-logo.png'
+imageUrl: '/images/project/chillers/cover.png'
 github: 'https://github.com/tharunkumartk/chillers-ios'
 blogSlug: 'chillers'
 tags:

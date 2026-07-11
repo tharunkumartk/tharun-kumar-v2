@@ -1,7 +1,7 @@
 ---
 timestamp: "2025-02-24T00:00:00Z"
 title: 'Neural Radiance Fields from Scratch'
-imageUrl: '/images/blog/blog-2.png'
+imageUrl: '/images/blog/nerf-implementation/cover.png'
 github: 'https://github.com/tharunkumartk/nerf-implementation'
 blogSlug: 'nerf-implementation'
 tags:

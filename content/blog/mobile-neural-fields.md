@@ -1,7 +1,7 @@
 ---
 timestamp: "2025-03-24T00:00:00Z"
 title: 'NeRFs for Panoramic Scene Reconstruction from Scratch'
-imageUrl: '/images/blog/blog-3.png'
+imageUrl: '/images/blog/mobile-nerfs/cover.png'
 github: 'https://github.com/tharunkumartk/nerf-implementation'
 blogSlug: 'mobile-neural-fields'
 tags:
