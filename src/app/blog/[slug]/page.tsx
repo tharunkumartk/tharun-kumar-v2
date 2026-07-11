@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import fs from "fs";
 import { getBlogPost } from "@/lib/blog";
 import { postsDirectory, projectsDirectory } from "@/lib/types";
 import { estimateReadTime, formatDate } from "@/lib/utils";
-import BackButton from "@/app/components/blog/BackButton";
 import MarkdownContent from "@/app/components/blog/MarkdownContent";
-import FooterColumn from "@/app/components/landing/FooterColumn";
+import Footer from "@/app/components/Footer";
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -32,60 +32,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <main className="min-h-screen overflow-y-auto">
-      <div className="max-w-4xl mx-auto px-8 md:px-12 lg:px-16 py-16 space-y-16">
-        <div className="flex items-center justify-between mb-16">
-          <BackButton href="/blog" title="Blog" />
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex flex-row text-xs sm:text-sm text-stone-600 dark:text-stone-400 space-x-4 mt-auto ">
-            <span>{formatDate(postData.timestamp)}</span>
-            <span>{estimateReadTime(postData.content)} min read</span>
-          </div>
-          <h1
-            className="font-regular text-stone-900 dark:text-stone-100 mb-2 opacity-0 animate-fadeIn text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
-            style={{
-              animationDelay: "0ms",
-              animationFillMode: "forwards",
-            }}
-          >
-            {postData.title}
-          </h1>
-          <div
-            className="mt-4 text-stone-600 dark:text-stone-400 transition-opacity duration-500 ease-in-out opacity-0 animate-fadeIn text-center max-w-3xl "
-            style={{
-              fontSize: "18px",
-              animationDelay: "200ms",
-              animationFillMode: "forwards",
-            }}
-          >
-            {postData.summary}
-          </div>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <Image
-            src={postData.imageUrl}
-            alt={postData.title}
-            width={800}
-            height={400}
-            className="rounded-xl flex-shrink-0 w-full h-[400px] object-cover opacity-0 animate-fadeIn"
-            style={{
-              animationDelay: "400ms",
-              animationFillMode: "forwards",
-            }}
-          />
-        </div>
-        <div
-          className="opacity-0 animate-fadeIn"
-          style={{
-            animationDelay: "600ms",
-            animationFillMode: "forwards",
-          }}
-        >
-          <MarkdownContent content={postData.content} />
-        </div>
-        <FooterColumn />
+    <main className="animate-fade mx-auto w-full max-w-2xl px-6 pt-14 md:pt-20 pb-16">
+      <Link
+        href="/blog"
+        className="text-[13px] text-muted underline underline-offset-[3px] decoration-[1.5px] decoration-faint hover:decoration-current transition-colors"
+      >
+        ← Blog
+      </Link>
+
+      <h1 className="font-serif text-3xl md:text-4xl text-foreground mt-8">
+        {postData.title}
+      </h1>
+      <p className="mt-4 text-[13px] text-muted">
+        {formatDate(postData.timestamp)} ·{" "}
+        {estimateReadTime(postData.content)} min read
+      </p>
+      <p className="mt-4 text-[15px] leading-[1.6] text-muted">
+        {postData.summary}
+      </p>
+
+      <Image
+        src={postData.imageUrl}
+        alt={postData.title}
+        width={800}
+        height={400}
+        className="mt-8 w-full h-[400px] object-cover rounded-sm"
+      />
+
+      <div className="mt-8">
+        <MarkdownContent content={postData.content} />
       </div>
+
+      <Footer />
     </main>
   );
 }

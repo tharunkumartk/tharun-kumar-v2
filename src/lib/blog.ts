@@ -36,6 +36,7 @@ export const getBlogPosts = cache((directory: string): BlogPost[] => {
           ? transformImageUrl(matterResult.data.previewImageUrl)
           : undefined,
         featured: matterResult.data.featured || false,
+        badge: matterResult.data.badge || undefined,
         summary: matterResult.data.summary,
         content: matterResult.content,
       } as BlogPost;
@@ -87,6 +88,7 @@ export const getBlogPost = cache(
           ? transformImageUrl(matterResult.data.previewImageUrl)
           : undefined,
         featured: matterResult.data.featured || false,
+        badge: matterResult.data.badge || undefined,
         summary: matterResult.data.summary,
         content: matterResult.content,
       } as BlogPost;

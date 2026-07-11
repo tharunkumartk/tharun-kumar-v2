@@ -2,6 +2,11 @@ import { getBlogPosts } from "@/lib/blog";
 import { postsDirectory, projectsDirectory } from "@/lib/types";
 import BlogPageClient from "../components/blog/BlogPageClient";
 
+export const metadata = {
+  title: "All Projects — Tharun Kumar",
+  description: "Writing and projects by Tharun Kumar",
+};
+
 export default function BlogPage() {
   const blogPosts = getBlogPosts(postsDirectory);
   const projects = getBlogPosts(projectsDirectory);
