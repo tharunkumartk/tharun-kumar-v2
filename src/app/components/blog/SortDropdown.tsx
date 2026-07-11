@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { SortOrder } from "./blogHooks";
 
 const OPTIONS: { value: SortOrder; label: string }[] = [
+  { value: "interesting", label: "Most interesting first" },
   { value: "newest", label: "Newest first" },
   { value: "oldest", label: "Oldest first" },
 ];
@@ -51,22 +52,31 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Sort order"
-        className="flex items-center gap-1.5 text-[13px] text-muted hover:text-foreground transition-colors focus:outline-none"
+        className="flex cursor-pointer items-center gap-1.5 text-[13px] text-muted hover:text-foreground transition-colors focus:outline-none"
       >
         {selected.label}
-        <span
-          className={`text-[9px] leading-none transition-transform duration-75 ${
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 12 12"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          className={`transition-transform duration-150 ${
             open ? "rotate-180" : ""
           }`}
         >
-          ▾
-        </span>
+          <path d="M2.5 4.5L6 8l3.5-3.5" />
+        </svg>
       </button>
 
       {open && (
         <ul
           role="listbox"
-          className="animate-fade-fast absolute left-0 z-10 mt-2 min-w-[9rem] overflow-hidden rounded-md border border-faint bg-background py-1 shadow-lg"
+          className="animate-fade-fast absolute right-0 z-10 mt-2 min-w-[11rem] overflow-hidden rounded-md border border-faint bg-background py-1 shadow-lg"
         >
           {OPTIONS.map((option) => {
             const isSelected = option.value === value;
@@ -78,7 +88,7 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
                     onChange(option.value);
                     setOpen(false);
                   }}
-                  className={`flex w-full items-center justify-between px-3 py-1.5 text-left text-[13px] transition-colors ${
+                  className={`flex w-full cursor-pointer items-center justify-between gap-2 whitespace-nowrap px-3 py-1.5 text-left text-[13px] transition-colors ${
                     isSelected
                       ? "text-foreground"
                       : "text-muted hover:text-foreground"

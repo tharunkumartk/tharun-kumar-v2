@@ -1,12 +1,12 @@
 import { useState, useMemo, useCallback } from "react";
 import { BlogPost } from "@/lib/types";
 
-export type SortOrder = "newest" | "oldest";
+export type SortOrder = "interesting" | "newest" | "oldest";
 
 // Custom hook for blog filtering and sorting
 export function useBlogFilters(posts: BlogPost[]) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("interesting");
 
   // Get all unique tags from posts
   const allTags = useMemo(() => {
@@ -27,6 +27,13 @@ export function useBlogFilters(posts: BlogPost[]) {
           );
 
     return [...filtered].sort((a, b) => {
+      if (sortOrder === "interesting") {
+        if (a.interestingness !== b.interestingness) {
+          return b.interestingness - a.interestingness;
+        }
+        // Tie-break by newest first
+        return a.timestamp < b.timestamp ? 1 : -1;
+      }
       if (sortOrder === "newest") {
         return a.timestamp < b.timestamp ? 1 : -1;
       }

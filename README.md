@@ -51,10 +51,13 @@ Dark mode:
 
 - **Framework**: Next.js 15 with App Router
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS v4
+- **Typography**: Inter (sans) and Source Serif 4 (serif) via `next/font`
 - **Content**: Markdown with gray-matter frontmatter parsing
+- **Rendering**: react-markdown with remark-gfm for GitHub-flavored markdown
+- **Math**: KaTeX with remark-math and rehype-katex
 - **Syntax Highlighting**: highlight.js with rehype-highlight
-- **Themes**: next-themes for dark/light mode
+- **Themes**: Automatic dark/light mode via CSS `prefers-color-scheme`
 
 ## Content Management
 

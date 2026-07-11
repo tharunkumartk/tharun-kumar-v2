@@ -4,8 +4,10 @@ import Footer from "@/app/components/Footer";
 
 export const dynamic = "force-static";
 
-const linkClass =
+const underlineClass =
   "underline underline-offset-[3px] decoration-[1.5px] decoration-faint hover:decoration-current transition-colors";
+const linkClass = `text-accent ${underlineClass}`;
+const mutedLinkClass = `text-muted ${underlineClass}`;
 
 function yearRange(startDate: string, endDate: string): string {
   const startYear = new Date(startDate).getFullYear().toString();
@@ -26,7 +28,7 @@ export default function WorkPage() {
 
   return (
     <main className="animate-fade mx-auto w-full max-w-2xl px-6 pt-14 md:pt-20 pb-16">
-      <Link href="/" className={`text-[13px] text-muted ${linkClass}`}>
+      <Link href="/" className={`text-[13px] ${mutedLinkClass}`}>
         ← Home
       </Link>
 
