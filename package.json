@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:previews": "node scripts/generate-previews.mjs",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -29,6 +31,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^15.1.0",
+    "playwright": "1.61.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
