@@ -1,0 +1,25 @@
+#!/bin/sh
+# Regenerate the README preview screenshots when the rendered homepage may have
+# changed, and stage the results into the commit.
+#
+# Skip with:  SKIP_PREVIEW=1 git commit ...   (or git commit --no-verify)
+
+if [ "$SKIP_PREVIEW" = "1" ]; then
+  exit 0
+fi
+
+# Only regenerate when something that affects the homepage render is staged.
+# (Ignore the preview PNGs themselves so we don't loop.)
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+if ! printf '%s\n' "$staged" | grep -Eq '^(src/|content/|public/me\.jpeg|src/app/globals\.css)'; then
+  exit 0
+fi
+
+echo "[pre-commit] regenerating preview screenshots..."
+if ! npm run --silent generate:previews; then
+  echo "[pre-commit] preview generation failed. Fix it, or bypass with SKIP_PREVIEW=1." >&2
+  exit 1
+fi
+
+git add public/preview.png public/preview-dark.png
+exit 0
