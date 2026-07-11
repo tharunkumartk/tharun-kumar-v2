@@ -1,13 +1,16 @@
 import ReactMarkdown from "react-markdown";
+import Image from "next/image";
 import { Children, isValidElement } from "react";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeHighlight from "rehype-highlight";
 import rehypeKatex from "rehype-katex";
-// import Image from "next/image";
 import "highlight.js/styles/github-dark.css";
 import "katex/dist/katex.min.css";
 import { transformImageUrl } from "@/lib/utils";
+
+const linkClass =
+  "underline underline-offset-[3px] decoration-[1.5px] decoration-faint hover:decoration-current transition-colors";
 
 interface MarkdownContentProps {
   content: string;
@@ -15,39 +18,39 @@ interface MarkdownContentProps {
 
 export default function MarkdownContent({ content }: MarkdownContentProps) {
   return (
-    <div className="prose prose-lg dark:prose-invert max-w-none">
+    <div className="max-w-none">
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex, rehypeHighlight]}
         components={{
-          // Headings
+          // Headings — serif, normal weight
           h1: ({ children }) => (
-            <h1 className="text-4xl font-bold text-stone-900 dark:text-stone-100 mt-12 mb-6 first:mt-0">
+            <h1 className="font-serif text-xl font-normal text-foreground mt-10 mb-3 first:mt-0">
               {children}
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-2xl font-semibold text-stone-900 dark:text-stone-100 mt-10 mb-5">
+            <h2 className="font-serif text-xl font-normal text-foreground mt-10 mb-3 first:mt-0">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-2xl font-semibold text-stone-900 dark:text-stone-100 mt-8 mb-4">
+            <h3 className="font-serif text-lg font-normal text-foreground mt-8 mb-2">
               {children}
             </h3>
           ),
           h4: ({ children }) => (
-            <h4 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mt-6 mb-3">
+            <h4 className="font-serif text-base font-normal text-foreground mt-8 mb-2">
               {children}
             </h4>
           ),
           h5: ({ children }) => (
-            <h5 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mt-6 mb-3">
+            <h5 className="font-serif text-[15px] font-normal text-foreground mt-8 mb-2">
               {children}
             </h5>
           ),
           h6: ({ children }) => (
-            <h6 className="text-base font-semibold text-stone-900 dark:text-stone-100 mt-6 mb-3">
+            <h6 className="font-serif text-[14px] font-normal text-foreground mt-8 mb-2">
               {children}
             </h6>
           ),
@@ -56,27 +59,27 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
           // Always use a div wrapper to avoid invalid nesting when custom renderers
           // return block elements (e.g., video, image wrappers) inside paragraphs.
           p: ({ children }) => (
-            <div className="text-stone-700 dark:text-stone-300 leading-relaxed mb-6 text-lg">
+            <div className="text-[15px] leading-[1.6] text-foreground mb-5">
               {children}
             </div>
           ),
 
           // Lists
           ul: ({ children }) => (
-            <ul className="list-disc list-inside mb-6 space-y-2 text-stone-700 dark:text-stone-300">
+            <ul className="list-disc pl-5 mb-5 space-y-1.5 text-foreground">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal list-inside mb-6 space-y-2 text-stone-700 dark:text-stone-300">
+            <ol className="list-decimal pl-5 mb-5 space-y-1.5 text-foreground">
               {children}
             </ol>
           ),
           li: ({ children }) => (
-            <li className="text-lg leading-relaxed">{children}</li>
+            <li className="text-[15px] leading-[1.6]">{children}</li>
           ),
 
-          // Links
+          // Links (with video-link rendering)
           a: ({ href, children }) => {
             const url = (href as string) || "";
             const lowerUrl = url.toLowerCase();
@@ -119,13 +122,13 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
                     controls
                     playsInline
                     preload="metadata"
-                    className="w-full rounded-lg shadow-lg my-8"
+                    className="w-full rounded-sm my-8"
                   >
                     <source src={url} type={getMimeType(lowerUrl)} />
                     Your browser does not support the video tag.{" "}
                     <a
                       href={url}
-                      className="text-blue-600 dark:text-blue-400 underline"
+                      className={linkClass}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -133,7 +136,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
                     </a>
                   </video>
                   {caption && (
-                    <span className="block text-center text-stone-500 dark:text-stone-400 text-sm -mt-6 mb-6 italic">
+                    <span className="block text-center text-muted text-[13px] -mt-6 mb-5 italic">
                       {caption}
                     </span>
                   )}
@@ -144,7 +147,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
             return (
               <a
                 href={href}
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline font-medium transition-colors duration-200"
+                className={linkClass}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -155,28 +158,24 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
 
           // Emphasis
           strong: ({ children }) => (
-            <strong className="font-bold text-stone-900 dark:text-stone-100">
+            <strong className="font-semibold text-foreground">
               {children}
             </strong>
           ),
-          em: ({ children }) => (
-            <em className="italic text-stone-800 dark:text-stone-200">
-              {children}
-            </em>
-          ),
+          em: ({ children }) => <em className="italic">{children}</em>,
 
           // Code
           code: ({ className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className || "");
             return match ? (
-              <pre className="bg-stone-100 dark:bg-stone-800 rounded-lg p-4 overflow-x-auto mb-6">
+              <pre className="bg-surface border border-faint rounded-sm p-4 overflow-x-auto mb-5">
                 <code className={className} {...props}>
                   {children}
                 </code>
               </pre>
             ) : (
               <code
-                className="bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 px-2 py-1 rounded text-sm font-mono"
+                className="bg-surface px-1.5 py-0.5 rounded text-[13px] font-mono"
                 {...props}
               >
                 {children}
@@ -184,70 +183,57 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
             );
           },
 
-          // Blockquotes
+          // Blockquotes — quiet, no bg
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-stone-300 dark:border-stone-600 pl-6 py-2 my-6 bg-stone-50 dark:bg-stone-800/50 rounded-r-lg">
-              <div className="text-stone-700 dark:text-stone-300 italic">
-                {children}
-              </div>
+            <blockquote className="border-l-2 border-faint pl-4 my-6 italic text-muted">
+              {children}
             </blockquote>
           ),
 
           // Horizontal rule
-          hr: () => (
-            <hr className="border-stone-300 dark:border-stone-600 my-8" />
-          ),
+          hr: () => <hr className="border-faint my-8" />,
 
-          // Images
+          // Images — served through next/image for responsive WebP + lazy-loading
           img: ({ src, alt }) => {
             const altText = alt || "Markdown image";
             const transformedSrc = transformImageUrl(
               (src as string) || "/images/blog/blog-1.jpeg"
             );
             return (
-              <div className="my-8">
-                {/* Use a plain img to avoid any SSR/client mismatch from Next/Image runtime logic in MD */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+              <span className="block my-8">
+                <Image
                   src={transformedSrc}
                   alt={altText}
-                  className="rounded-lg shadow-lg w-full object-cover"
+                  width={1600}
+                  height={900}
+                  sizes="(max-width: 768px) 100vw, 672px"
+                  className="rounded-sm w-full h-auto"
                 />
                 {alt && (
-                  <div className="text-center text-stone-500 dark:text-stone-400 text-sm mt-2 italic">
+                  <span className="block text-center text-muted text-[13px] mt-2 italic">
                     {alt}
-                  </div>
+                  </span>
                 )}
-              </div>
+              </span>
             );
           },
 
-          // Tables
+          // Tables — minimal, header bottom border only
           table: ({ children }) => (
             <div className="overflow-x-auto my-6">
-              <table className="min-w-full border border-stone-300 dark:border-stone-600">
-                {children}
-              </table>
+              <table className="min-w-full border-collapse">{children}</table>
             </div>
           ),
-          thead: ({ children }) => (
-            <thead className="bg-stone-100 dark:bg-stone-800">{children}</thead>
-          ),
-          tbody: ({ children }) => (
-            <tbody className="bg-white dark:bg-stone-900">{children}</tbody>
-          ),
-          tr: ({ children }) => (
-            <tr className="border-b border-stone-300 dark:border-stone-600">
-              {children}
-            </tr>
-          ),
+          thead: ({ children }) => <thead>{children}</thead>,
+          tbody: ({ children }) => <tbody>{children}</tbody>,
+          tr: ({ children }) => <tr>{children}</tr>,
           th: ({ children }) => (
-            <th className="px-4 py-2 text-left font-semibold text-stone-900 dark:text-stone-100">
+            <th className="py-2 pr-4 text-left font-semibold text-foreground border-b border-faint">
               {children}
             </th>
           ),
           td: ({ children }) => (
-            <td className="px-4 py-2 text-stone-700 dark:text-stone-300">
+            <td className="py-2 pr-4 text-[15px] leading-[1.6] text-foreground">
               {children}
             </td>
           ),

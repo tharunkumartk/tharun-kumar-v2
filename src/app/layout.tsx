@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import ServiceWorkerUnregister from "./components/ServiceWorkerUnregister";
 
@@ -8,18 +8,23 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
   ),
   title: "Tharun Kumar",
-  description: "Senior at Princeton University",
+  description: "Princeton University '26",
   icons: {
     icon: "/favico.ico",
   },
   openGraph: {
     title: "Tharun Kumar",
-    description: "Senior at Princeton University",
+    description: "Princeton University '26",
     images: [
       {
         url: "/preview.png",
@@ -33,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Tharun Kumar",
-    description: "Senior at Princeton University",
+    description: "Princeton University '26",
     images: ["/preview.png"],
   },
 };
@@ -45,7 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
+      <body
+        className={`${inter.variable} ${sourceSerif.variable} bg-background text-foreground antialiased`}
+      >
         <ServiceWorkerUnregister />
         {children}
       </body>

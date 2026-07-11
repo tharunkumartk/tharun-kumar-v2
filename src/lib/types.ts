@@ -8,6 +8,7 @@ export interface BlogPost {
   imageUrl: string;
   previewImageUrl?: string; // Optional: used in list views, falls back to imageUrl
   featured?: boolean; // Optional: if true, pushed to the top of feeds
+  badge?: string; // Optional: short label shown next to the title (e.g. venue)
   summary: string;
   content: string;
 }

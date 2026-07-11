@@ -1,8 +1,8 @@
 ---
-company: "Google DeepMind"
-position: "Research Engineer"
+company: "Google DeepMind at Princeton"
+position: "Undergraduate Researcher"
 startDate: "2025-09-01"
-endDate: "present"
+endDate: "2026-05-31"
 companyUrl: "https://sites.google.com/view/gbrainprinceton/projects/spectral-transformers"
 skills: ["Python", "PyTorch", "State Space Models", "LLMs", "Machine Learning", "Research", "Spectral Filtering"]
 order: -1
