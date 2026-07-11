@@ -1,6 +1,8 @@
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import { Children, isValidElement } from "react";
+import fs from "fs";
+import path from "path";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeHighlight from "rehype-highlight";
@@ -10,7 +12,27 @@ import "katex/dist/katex.min.css";
 import { transformImageUrl } from "@/lib/utils";
 
 const linkClass =
-  "underline underline-offset-[3px] decoration-[1.5px] decoration-faint hover:decoration-current transition-colors";
+  "text-accent underline underline-offset-[3px] decoration-[1.5px] decoration-faint hover:decoration-current transition-colors";
+
+// If an image has a sibling `<name>-dark.<ext>` file in /public, we serve that
+// variant under `prefers-color-scheme: dark`. The /public file is the
+// build-time existence gate; the returned path is CDN-transformed at the call
+// site so it loads from the same CDN as the light image. Returns the dark
+// image's relative path or null when no dark version exists. Runs at render
+// time in the RSC layer.
+function darkVariantPath(src: string): string | null {
+  if (!src.startsWith("/")) return null;
+  const dot = src.lastIndexOf(".");
+  if (dot === -1) return null;
+  const darkRel = `${src.slice(0, dot)}-dark${src.slice(dot)}`;
+  try {
+    return fs.existsSync(path.join(process.cwd(), "public", darkRel))
+      ? darkRel
+      : null;
+  } catch {
+    return null;
+  }
+}
 
 interface MarkdownContentProps {
   content: string;
@@ -193,22 +215,43 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
           // Horizontal rule
           hr: () => <hr className="border-faint my-8" />,
 
-          // Images — served through next/image for responsive WebP + lazy-loading
+          // Images — served through next/image for responsive WebP + lazy-loading.
+          // When a `-dark` sibling exists, render both and toggle with CSS so the
+          // dark variant shows under `prefers-color-scheme: dark`.
           img: ({ src, alt }) => {
             const altText = alt || "Markdown image";
-            const transformedSrc = transformImageUrl(
-              (src as string) || "/images/blog/blog-1.jpeg"
-            );
+            const rawSrc = (src as string) || "/images/blog/blog-1.jpeg";
+            const transformedSrc = transformImageUrl(rawSrc);
+            const darkRel = darkVariantPath(rawSrc);
+            const darkSrc = darkRel ? transformImageUrl(darkRel) : null;
+            const imgProps = {
+              alt: altText,
+              width: 1600,
+              height: 900,
+              sizes: "(max-width: 768px) 100vw, 672px",
+            } as const;
             return (
               <span className="block my-8">
-                <Image
-                  src={transformedSrc}
-                  alt={altText}
-                  width={1600}
-                  height={900}
-                  sizes="(max-width: 768px) 100vw, 672px"
-                  className="rounded-sm w-full h-auto"
-                />
+                {darkSrc ? (
+                  <>
+                    <Image
+                      {...imgProps}
+                      src={transformedSrc}
+                      className="rounded-sm w-full h-auto block dark:hidden"
+                    />
+                    <Image
+                      {...imgProps}
+                      src={darkSrc}
+                      className="rounded-sm w-full h-auto hidden dark:block"
+                    />
+                  </>
+                ) : (
+                  <Image
+                    {...imgProps}
+                    src={transformedSrc}
+                    className="rounded-sm w-full h-auto"
+                  />
+                )}
                 {alt && (
                   <span className="block text-center text-muted text-[13px] mt-2 italic">
                     {alt}

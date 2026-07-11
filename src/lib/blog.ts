@@ -5,6 +5,23 @@ import { cache } from "react";
 import { BlogPost, postsDirectory } from "./types";
 import { transformImageUrl } from "./utils";
 
+// Internal, hand-tuned "interestingness" ratings (0–10) keyed by slug.
+// Used for the "Most interesting first" sort order. Anything not listed
+// falls back to DEFAULT_INTERESTINGNESS.
+const DEFAULT_INTERESTINGNESS = 7;
+const INTERESTINGNESS: Record<string, number> = {
+  "mech-probes-architecture-screen": 9,
+  "moe-vla-emergent-skills": 9,
+  "3dgs-restoration": 8,
+  "comic-mp4": 8,
+  brainfeed: 8,
+  chillers: 6,
+};
+
+function getInterestingness(slug: string): number {
+  return INTERESTINGNESS[slug] ?? DEFAULT_INTERESTINGNESS;
+}
+
 export const getBlogPosts = cache((directory: string): BlogPost[] => {
   // Get file names under /content/blog
   const fileNames = fs.readdirSync(directory);
@@ -37,6 +54,7 @@ export const getBlogPosts = cache((directory: string): BlogPost[] => {
           : undefined,
         featured: matterResult.data.featured || false,
         badge: matterResult.data.badge || undefined,
+        interestingness: getInterestingness(slug),
         summary: matterResult.data.summary,
         content: matterResult.content,
       } as BlogPost;
@@ -89,6 +107,7 @@ export const getBlogPost = cache(
           : undefined,
         featured: matterResult.data.featured || false,
         badge: matterResult.data.badge || undefined,
+        interestingness: getInterestingness(slug),
         summary: matterResult.data.summary,
         content: matterResult.content,
       } as BlogPost;

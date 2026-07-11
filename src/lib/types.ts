@@ -9,6 +9,7 @@ export interface BlogPost {
   previewImageUrl?: string; // Optional: used in list views, falls back to imageUrl
   featured?: boolean; // Optional: if true, pushed to the top of feeds
   badge?: string; // Optional: short label shown next to the title (e.g. venue)
+  interestingness: number; // Internal 0–10 rating used for "Most interesting first" sorting
   summary: string;
   content: string;
 }

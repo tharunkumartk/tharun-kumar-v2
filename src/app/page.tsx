@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getBlogPosts } from "@/lib/blog";
+import { formatDate } from "@/lib/utils";
 import { postsDirectory, projectsDirectory } from "@/lib/types";
 import Footer from "@/app/components/Footer";
 import CopyEmail from "@/app/components/home/CopyEmail";
@@ -7,7 +8,7 @@ import CopyEmail from "@/app/components/home/CopyEmail";
 export const dynamic = "force-static";
 
 const linkClass =
-  "underline underline-offset-[3px] decoration-[1.5px] decoration-faint hover:decoration-current transition-colors";
+  "text-accent underline underline-offset-[3px] decoration-[1.5px] decoration-faint hover:decoration-current transition-colors";
 
 export default function Home() {
   // Writing and projects live together as "projects" (empty-title stubs hidden)
@@ -144,7 +145,7 @@ export default function Home() {
             clothes).
           </p>
         </div>
-        <p className="mt-4 text-[15px] leading-[1.6] text-muted">
+        <p className="mt-4 text-[15px] leading-[1.6] text-subtle">
           <strong className="font-medium text-foreground">
             I love meeting new people.
           </strong>{" "}
@@ -159,7 +160,7 @@ export default function Home() {
       <section className="mt-10">
         <h2 className="font-serif text-xl font-normal text-foreground">Work</h2>
         <p className="mt-4 text-[15px] leading-[1.6] text-foreground">
-          Working on something new.
+          Working on something new ;)
         </p>
         <p className="mt-4 text-[15px] leading-[1.6]">
           <Link href="/work" className={linkClass}>
@@ -175,7 +176,7 @@ export default function Home() {
         </h2>
         <ul className="mt-4 list-disc pl-5 space-y-3 text-[15px] leading-[1.6] text-foreground">
           {featuredProjects.map((project) => (
-            <li key={project.slug}>
+            <li key={project.slug} className="relative">
               <Link href={`/blog/${project.slug}`} className={linkClass}>
                 {project.title}
               </Link>
@@ -186,6 +187,9 @@ export default function Home() {
               )}
               <span className="block text-[14px] text-muted">
                 {project.summary}
+              </span>
+              <span className="absolute bottom-0 right-0 text-[12px] text-muted/60">
+                {formatDate(project.timestamp)}
               </span>
             </li>
           ))}
