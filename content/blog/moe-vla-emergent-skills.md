@@ -1,7 +1,7 @@
 ---
 timestamp: "2026-07-11T00:00:00Z"
 title: 'Emergent Compositional Skills in Mixture-of-Experts VLAs'
-imageUrl: '/images/blog/moe-vla-emergent-skills/architecture_figure.png'
+imageUrl: '/images/blog/moe-vla-emergent-skills/cover.png'
 blogSlug: 'moe-vla-emergent-skills'
 badge: "ICML CompLearn '26"
 tags:
