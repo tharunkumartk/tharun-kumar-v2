@@ -180,16 +180,18 @@ export default function Home() {
               <Link href={`/blog/${project.slug}`} className={linkClass}>
                 {project.title}
               </Link>
-              {project.badge && (
-                <span className="ml-2 whitespace-nowrap text-[12px] text-muted">
-                  {project.badge}
-                </span>
-              )}
               <span className="block text-[14px] text-muted">
                 {project.summary}
               </span>
-              <span className="absolute bottom-0 right-0 text-[12px] text-muted/60">
-                {formatDate(project.timestamp)}
+              <span className="absolute bottom-0 right-0 flex items-center gap-2">
+                {project.badge && (
+                  <span className="whitespace-nowrap text-[12px] text-muted">
+                    {project.badge}
+                  </span>
+                )}
+                <span className="text-[12px] text-muted/60">
+                  {formatDate(project.timestamp)}
+                </span>
               </span>
             </li>
           ))}

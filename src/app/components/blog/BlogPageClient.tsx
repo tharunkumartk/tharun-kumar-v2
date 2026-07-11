@@ -70,8 +70,15 @@ export default function BlogPageClient({ posts }: BlogPageClientProps) {
               <p className="mt-2 text-[14px] leading-[1.6] text-muted">
                 {post.summary}
               </p>
-              <span className="absolute bottom-0 right-0 text-[12px] text-muted/60">
-                {formatDate(post.timestamp)}
+              <span className="absolute bottom-0 right-0 flex items-center gap-2">
+                {post.badge && (
+                  <span className="whitespace-nowrap text-[12px] text-muted">
+                    {post.badge}
+                  </span>
+                )}
+                <span className="text-[12px] text-muted/60">
+                  {formatDate(post.timestamp)}
+                </span>
               </span>
             </article>
           ))}
