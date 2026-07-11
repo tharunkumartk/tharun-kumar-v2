@@ -1,6 +1,6 @@
 <h1 align="center">
 <a href="https://tharuntk.com/" target="_blank"> 
-  tharunkumar.xyz
+  tharuntk.com
   </a>
 </h1>
 <p align="center">
