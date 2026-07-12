@@ -145,7 +145,7 @@ export default function Home() {
             clothes).
           </p>
         </div>
-        <p className="mt-4 text-[15px] leading-[1.6] text-subtle">
+        <p className="mt-4 text-[15px] leading-[1.6] text-accent">
           <strong className="font-medium text-foreground">
             I love meeting new people.
           </strong>{" "}

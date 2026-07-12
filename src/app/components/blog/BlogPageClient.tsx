@@ -35,7 +35,7 @@ export default function BlogPageClient({ posts }: BlogPageClientProps) {
 
       {/* Subtitle + Sort — inline on desktop, stacked on mobile */}
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-        <p className="text-[15px] leading-[1.6] text-subtle">
+        <p className="text-[15px] leading-[1.6] text-accent">
           Some of the interesting projects I&apos;ve worked on
         </p>
         <SortDropdown value={sortOrder} onChange={setSortOrder} />
