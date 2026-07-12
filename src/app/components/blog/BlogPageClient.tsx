@@ -61,25 +61,27 @@ export default function BlogPageClient({ posts }: BlogPageClientProps) {
       ) : (
         <div className="mt-10 space-y-8">
           {filteredAndSortedPosts.map((post) => (
-            <article key={post.slug} className="relative">
+            <article key={post.slug}>
               <h2 className="font-serif text-lg text-foreground">
                 <Link href={`/blog/${post.slug}`} className={linkClass}>
                   {post.title}
                 </Link>
               </h2>
-              <p className="mt-2 text-[14px] leading-[1.6] text-muted">
-                {post.summary}
-              </p>
-              <span className="absolute bottom-0 right-0 flex items-center gap-2">
-                {post.badge && (
-                  <span className="whitespace-nowrap text-[12px] text-muted">
-                    {post.badge}
+              <div className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <p className="text-[14px] leading-[1.6] text-muted">
+                  {post.summary}
+                </p>
+                <span className="ml-auto flex shrink-0 items-center gap-2">
+                  {post.badge && (
+                    <span className="whitespace-nowrap text-[12px] text-muted">
+                      {post.badge}
+                    </span>
+                  )}
+                  <span className="text-[12px] text-muted/60">
+                    {formatDate(post.timestamp)}
                   </span>
-                )}
-                <span className="text-[12px] text-muted/60">
-                  {formatDate(post.timestamp)}
                 </span>
-              </span>
+              </div>
             </article>
           ))}
         </div>

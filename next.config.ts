@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   images: {
     domains: ["ydfksaipdlqazgcsrdlm.supabase.co"],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 };
 

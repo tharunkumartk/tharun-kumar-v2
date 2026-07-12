@@ -56,7 +56,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         alt={postData.title}
         width={800}
         height={400}
-        className="mt-8 w-full h-[400px] object-cover rounded-sm"
+        className="mt-8 w-full h-auto object-contain rounded-sm"
       />
 
       <div className="mt-8">
