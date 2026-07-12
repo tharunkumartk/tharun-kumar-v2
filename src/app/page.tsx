@@ -176,23 +176,25 @@ export default function Home() {
         </h2>
         <ul className="mt-4 list-disc pl-5 space-y-3 text-[15px] leading-[1.6] text-foreground">
           {featuredProjects.map((project) => (
-            <li key={project.slug} className="relative">
+            <li key={project.slug}>
               <Link href={`/blog/${project.slug}`} className={linkClass}>
                 {project.title}
               </Link>
-              <span className="block text-[14px] text-muted">
-                {project.summary}
-              </span>
-              <span className="absolute bottom-0 right-0 flex items-center gap-2">
-                {project.badge && (
-                  <span className="whitespace-nowrap text-[12px] text-muted">
-                    {project.badge}
-                  </span>
-                )}
-                <span className="text-[12px] text-muted/60">
-                  {formatDate(project.timestamp)}
+              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <span className="text-[14px] text-muted">
+                  {project.summary}
                 </span>
-              </span>
+                <span className="ml-auto flex shrink-0 items-center gap-2">
+                  {project.badge && (
+                    <span className="whitespace-nowrap text-[12px] text-muted">
+                      {project.badge}
+                    </span>
+                  )}
+                  <span className="text-[12px] text-muted/60">
+                    {formatDate(project.timestamp)}
+                  </span>
+                </span>
+              </div>
             </li>
           ))}
         </ul>

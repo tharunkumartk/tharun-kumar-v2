@@ -1,7 +1,7 @@
 ---
 timestamp: "2026-07-10T00:00:00Z"
 title: 'Mechanistic Capability Probes as a Cheap Screen for New Architectures'
-imageUrl: '/images/blog/mech-probes-architecture-screen/cover.png'
+imageUrl: '/images/blog/mech-probes-architecture-screen/cover.svg'
 blogSlug: 'mech-probes-architecture-screen'
 badge: "ICML MechInterp '26"
 tags:
